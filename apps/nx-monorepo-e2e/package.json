@@ -1,0 +1,10 @@
+{
+  "name": "@nx-monorepo/nx-monorepo-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@nx-monorepo/nx-monorepo"
+    ]
+  }
+}
