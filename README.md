@@ -1,82 +1,38 @@
 # NxMonorepo
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Nx-driven workspace combining a Next.js host app and a Vite SPA with shared component libraries. Use Node 20.11+ and npm 10+ (enforced via `package.json`) so Nx plugins, SWC, and Vite stay in sync across contributors.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## Repository Layout
+- `apps/nx-monorepo` – Next.js 15 app with Tailwind, Jest unit tests, and Cypress e2e (`apps/nx-monorepo-e2e`).
+- `apps/web-app` – Vite/React app with Vitest and Storybook support plus its own e2e suite (`apps/web-app-e2e`).
+- `libs/ui` – Reusable UI components consumed by both apps.
+- `docs/AGENTS.md` – Contributor handbook; `docs/WORK_LOG.md` captures automation activity.
+- Root configs (`nx.json`, `tsconfig.base.json`, `eslint.config.mjs`) define module boundaries and path aliases for every project.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Installation & Scripts
+Install once with npm to generate `package-lock.json` (no pnpm lockfiles):
 
-## Finish your CI setup
-
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/uNIh1mn8r1)
-
-
-## Run tasks
-
-To run the dev server for your app, use:
-
-```sh
-npx nx dev nx-monorepo
+```bash
+npm install
+npm run dev          # next dev for apps/nx-monorepo
+npm run dev:web      # vite dev server for apps/web-app
+npm run build        # builds every project respecting Nx graph
+npm run test         # Jest/Vitest unit suites
+npm run e2e          # Cypress project suites
+npm run lint         # ESLint across all projects
+npm run storybook    # Storybook for libs/ui
+npm run graph        # opens the Nx dependency graph
 ```
 
-To create a production bundle:
+Scripts are wrappers around `nx run-many` / `nx <target> <project>` so you can also call Nx directly when needed (`npx nx dev web-app`, `npx nx affected --target=build`, etc.).
 
-```sh
-npx nx build nx-monorepo
-```
+## Contribution Guidelines
+- Follow the naming conventions and testing expectations in `docs/AGENTS.md`.
+- Run `npm run format:write` (Prettier, single quotes) before committing; lint/tests should pass locally.
+- Keep imports within Nx’s enforced module boundaries; update `nx.json` tags when introducing new domains.
+- Use Conventional Commits (`feat: ...`, `fix: ...`) so `nx affected` output remains meaningful.
 
-To see all available targets to run for a project, run:
-
-```sh
-npx nx show project nx-monorepo
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/next:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/react:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Troubleshooting
+- If Nx complains about pnpm, ensure `pnpm-lock.yaml` is not present; this repo standardizes on npm.
+- Missing Vite plugins (e.g., `vite-tsconfig-paths`) have been added to root devDependencies—run `npm install` to refresh.
+- Still seeing `[DEP0180] fs.Stats` warnings? They stem from upstream tooling and can be ignored until Nx/plugins update.
