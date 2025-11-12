@@ -4,7 +4,7 @@ Nx-driven workspace combining a Next.js host app and a Vite SPA with shared comp
 
 ## Repository Layout
 - `apps/nx-monorepo` – Next.js 15 app with Tailwind, Jest unit tests, and Cypress e2e (`apps/nx-monorepo-e2e`).
-- `apps/web-app` – Vite/React app with Vitest and Storybook support plus its own e2e suite (`apps/web-app-e2e`).
+- `apps/split-bill` – Next.js 15 app with Tailwind, Jest unit tests, and Cypress e2e (`apps/split-bill-e2e`).
 - `libs/ui` – Reusable UI components consumed by both apps.
 - `docs/AGENTS.md` – Contributor handbook; `docs/WORK_LOG.md` captures automation activity.
 - Root configs (`nx.json`, `tsconfig.base.json`, `eslint.config.mjs`) define module boundaries and path aliases for every project.
@@ -15,7 +15,7 @@ Install once with npm to generate `package-lock.json` (no pnpm lockfiles):
 ```bash
 npm install
 npm run dev          # next dev for apps/nx-monorepo
-npm run dev:web      # vite dev server for apps/web-app
+npm run dev:web      # vite dev server for apps/split-bill
 npm run build        # builds every project respecting Nx graph
 npm run test         # Jest/Vitest unit suites
 npm run e2e          # Cypress project suites
@@ -24,7 +24,7 @@ npm run storybook    # Storybook for libs/ui
 npm run graph        # opens the Nx dependency graph
 ```
 
-Scripts are wrappers around `nx run-many` / `nx <target> <project>` so you can also call Nx directly when needed (`npx nx dev web-app`, `npx nx affected --target=build`, etc.).
+Scripts are wrappers around `nx run-many` / `nx <target> <project>` so you can also call Nx directly when needed (`npx nx dev split-bill`, `npx nx affected --target=build`, etc.).
 
 ## Contribution Guidelines
 - Follow the naming conventions and testing expectations in `docs/AGENTS.md`.

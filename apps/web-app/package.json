@@ -1,8 +1,0 @@
-{
-  "name": "@nx-monorepo/web-app",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "vite-tsconfig-paths": "^5.1.4"
-  }
-}

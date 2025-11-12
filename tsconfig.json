@@ -13,12 +13,6 @@
       "path": "./libs/ui"
     },
     {
-      "path": "./apps/web-app-e2e"
-    },
-    {
-      "path": "./apps/web-app"
-    },
-    {
       "path": "./apps/split-bill-e2e"
     },
     {

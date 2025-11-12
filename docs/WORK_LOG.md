@@ -2,7 +2,7 @@
 
 | Timestamp (UTC) | Action | Result |
 | --- | --- | --- |
-| 2025-02-14 03:40 | Reviewed repo layout, package manifests, and installer output to understand existing Nx/Vite setup and dependency pain points. | Confirmed primary apps (`apps/nx-monorepo`, `apps/web-app`) plus `libs/ui`, identified deprecated sub-dependencies from `npm install`. |
+| 2025-02-14 03:40 | Reviewed repo layout, package manifests, and installer output to understand existing Nx/Vite setup and dependency pain points. | Confirmed primary apps (`apps/nx-monorepo`, `apps/split-bill`) plus `libs/ui`, identified deprecated sub-dependencies from `npm install`. |
 | 2025-02-14 03:55 | Authored `AGENTS.md` contributor guide outlining structure, commands, style, testing, and PR expectations tailored to this workspace. | Added concise reference (200-400 words) so new agents know how to work inside the monorepo. |
 | 2025-02-14 04:05 | Enhanced `package.json` with Nx task scripts, Node/npm engine pins, npm package manager metadata, and dependency override bumping `jsdom` to 26.x. | Provides faster task DX, enforces modern tooling, and eliminates the `domexception`/`abab` warnings seen during `npm install`. |
 | 2025-02-14 04:15 | Added targeted overrides for `@swc-node/*` to re-use the pinned `@swc/core` runtime and re-installed dependencies. | `npm install` now completes cleanly without peer-override warnings, reducing setup noise and aligning Nx/plugin tooling. |

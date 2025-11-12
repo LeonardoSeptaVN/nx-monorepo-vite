@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx dev nx-monorepo",
-    "dev:web": "nx dev web-app",
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",
     "lint": "nx run-many -t lint",
@@ -31,7 +30,7 @@
     }
   },
   "dependencies": {
-    "next": "~15.2.4",
+    "next": "^15.5.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "6.29.0"
@@ -93,9 +92,9 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
-    "vite-tsconfig-paths": "^5.1.4",
     "vite": "^7.0.0",
     "vite-plugin-dts": "~4.5.0",
+    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.0"
   }
 }
