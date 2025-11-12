@@ -7,11 +7,7 @@
     "emitDeclarationOnly": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,13 +17,10 @@
         "name": "next"
       }
     ],
+    "types": [],
     "paths": {
-      "@/": [
-        "./src/"
-      ],
-      "@nx-monorepo/ui": [
-        "../../libs/ui/src/index.ts"
-      ]
+      "@/": ["./src/"],
+      "@nx-monorepo/ui": ["../../libs/ui/src/index.ts"]
     },
     "outDir": "dist",
     "rootDir": "src",

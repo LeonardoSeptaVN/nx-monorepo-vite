@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
 
 permissions:
@@ -37,8 +37,8 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm exec cypress install
+      # - run: pnpm install --frozen-lockfile
+      # - run: pnpm exec cypress install
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: pnpm exec nx-cloud record -- echo Hello World
