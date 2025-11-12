@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Button } from '@nx-monorepo/ui';
 
@@ -9,11 +11,12 @@ export default function Index() {
    */
   return (
     <div>
-      {/* <div className="flex items-center justify-center h-screen bg-gray-100">
-        <Button label="Hello NX + Tailwind" onClick={() => alert('Clicked!')} />
-      </div> */}
       <div className="flex items-center justify-center h-screen bg-gray-100">
-        <Button label="Hello from Button component in UI library" />
+        <Button
+          label="Hello NX + Tailwind"
+          className="bg-white text-black border border-blue-600 text-blue-600 p-2 rounded-lg"
+          onClick={() => alert('Clicked!')}
+        />
       </div>
       <div className="wrapper">
         <div className="container">
