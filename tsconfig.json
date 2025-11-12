@@ -17,6 +17,12 @@
     },
     {
       "path": "./apps/web-app"
+    },
+    {
+      "path": "./apps/split-bill-e2e"
+    },
+    {
+      "path": "./apps/split-bill"
     }
   ],
   "ts-node": {

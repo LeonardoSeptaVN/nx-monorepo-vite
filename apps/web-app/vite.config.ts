@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import * as path from 'path';
 
 
 export default defineConfig(() => ({
@@ -15,7 +16,12 @@ export default defineConfig(() => ({
     port: 4200,
     host: 'localhost',
   },
-  plugins: [react(), tsconfigPaths()],
+  plugins: [tsconfigPaths(), react()],
+  resolve: {
+    alias: {
+      '@nx-monorepo/ui': path.resolve(__dirname, '../../libs/ui/src/index.ts'),
+    },
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [],
