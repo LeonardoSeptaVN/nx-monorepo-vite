@@ -8,6 +8,22 @@
     },
     {
       "path": "./apps/nx-monorepo"
+    },
+    {
+      "path": "./libs/ui"
+    },
+    {
+      "path": "./apps/web-app-e2e"
+    },
+    {
+      "path": "./apps/web-app"
     }
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node10",
+      "customConditions": null
+    }
+  }
 }
