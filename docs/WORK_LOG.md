@@ -10,3 +10,4 @@
 | 2025-02-14 04:45 | Replaced the default Nx boilerplate `README.md` with repo-specific onboarding details (structure, scripts, contribution notes, troubleshooting). | README now mirrors our actual setup and points contributors to `AGENTS.md` plus npm-based workflows. |
 | 2025-02-14 04:55 | Documented each Nx project (Next.js app, Vite app, and both Cypress suites) plus the exact commands to run/build them, and added the table to `README.md`. | Contributors can now see every runnable target and its Nx alias directly from the README. |
 | 2025-02-14 05:00 | Added a quick bullet list of all apps/suites in the README above the command table. | Readers can glance the app roster without parsing the table. |
+| 2025-02-14 05:05 | Removed a regenerated `pnpm-lock.yaml` and added it to `.gitignore` to prevent Nx from trying to parse pnpm metadata when using npm. | `npx nx dev split-bill` (and other Nx tasks) no longer fail due to pnpm lockfile parsing. |
