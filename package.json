@@ -2,8 +2,34 @@
   "name": "@nx-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx dev nx-monorepo",
+    "dev:web": "nx dev web-app",
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "lint": "nx run-many -t lint",
+    "format:write": "nx format:write",
+    "format:check": "nx format:check",
+    "storybook": "nx storybook ui",
+    "storybook:build": "nx build-storybook ui",
+    "e2e": "nx run-many -t e2e",
+    "graph": "nx graph"
+  },
   "private": true,
+  "engines": {
+    "node": ">=20.11.0",
+    "npm": ">=10.5.0"
+  },
+  "packageManager": "npm@10.9.0",
+  "overrides": {
+    "jsdom": "^26.1.0",
+    "@swc-node/register": {
+      "@swc/core": "~1.5.7"
+    },
+    "@swc-node/core": {
+      "@swc/core": "~1.5.7"
+    }
+  },
   "dependencies": {
     "next": "~15.2.4",
     "react": "^19.0.0",
@@ -30,7 +56,6 @@
     "@nx/workspace": "22.0.3",
     "@storybook/react": "9.1.16",
     "@storybook/react-vite": "9.1.16",
-    "@swc-node/register": "~1.9.1",
     "@swc/cli": "~0.6.0",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
@@ -57,7 +82,7 @@
     "jest-environment-jsdom": "^30.0.2",
     "jest-util": "^30.0.2",
     "jiti": "2.4.2",
-    "jsdom": "~22.1.0",
+    "jsdom": "^26.1.0",
     "nx": "22.0.3",
     "postcss": "8.4.38",
     "prettier": "^2.6.2",
@@ -68,6 +93,7 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
+    "vite-tsconfig-paths": "^5.1.4",
     "vite": "^7.0.0",
     "vite-plugin-dts": "~4.5.0",
     "vitest": "^3.0.0"
