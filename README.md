@@ -9,6 +9,20 @@ Nx-driven workspace combining a Next.js host app and a Vite SPA with shared comp
 - `docs/AGENTS.md` – Contributor handbook; `docs/WORK_LOG.md` captures automation activity.
 - Root configs (`nx.json`, `tsconfig.base.json`, `eslint.config.mjs`) define module boundaries and path aliases for every project.
 
+## Applications
+- `nx-monorepo` – Next.js shell / host
+- `web-app` – Vite SPA
+- `nx-monorepo-e2e` – Cypress tests for the host app
+- `web-app-e2e` – Cypress tests for the Vite app
+
+## Application Targets
+| Project | Purpose | Start (dev) | Production Build |
+| --- | --- | --- | --- |
+| `nx-monorepo` | Next.js shell application | `npx nx dev nx-monorepo` (aliased by `npm run dev`) | `npx nx build nx-monorepo` |
+| `web-app` | Vite/React SPA | `npx nx dev web-app` (`npm run dev:web`) | `npx nx build web-app` |
+| `nx-monorepo-e2e` | Cypress tests for Next.js app | `npx nx e2e nx-monorepo-e2e` (`npm run e2e -- --projects nx-monorepo-e2e`) | Record on CI |
+| `web-app-e2e` | Cypress tests for Vite app | `npx nx e2e web-app-e2e` (`npm run e2e -- --projects web-app-e2e`) | Record on CI |
+
 ## Installation & Scripts
 Install once with npm to generate `package-lock.json` (no pnpm lockfiles):
 
