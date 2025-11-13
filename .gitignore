@@ -54,4 +54,4 @@ vitest.config.*.timestamp*
 
 storybook-static
 AGENTS.md
-pnpm-lock.yaml
+# pnpm-lock.yaml

@@ -17,9 +17,9 @@
   "private": true,
   "engines": {
     "node": ">=20.11.0",
-    "npm": ">=10.5.0"
+    "pnpm": ">=8.0.0"
   },
-  "packageManager": "npm@10.9.0",
+  "packageManager": "pnpm",
   "overrides": {
     "jsdom": "^26.1.0",
     "@swc-node/register": {
@@ -30,6 +30,7 @@
     }
   },
   "dependencies": {
+    "lucide-react": "^0.553.0",
     "next": "^15.5.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
