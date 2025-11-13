@@ -3,6 +3,7 @@
 Nx-driven workspace combining a Next.js host app and a Vite SPA with shared component libraries. Use Node 20.11+ and npm 10+ (enforced via `package.json`) so Nx plugins, SWC, and Vite stay in sync across contributors.
 
 ## Repository Layout
+
 - `apps/nx-monorepo` – Next.js 15 app with Tailwind, Jest unit tests, and Cypress e2e (`apps/nx-monorepo-e2e`).
 - `apps/split-bill` – Next.js 15 app with Tailwind, Jest unit tests, and Cypress e2e (`apps/split-bill-e2e`).
 - `libs/ui` – Reusable UI components consumed by both apps.
@@ -10,21 +11,24 @@ Nx-driven workspace combining a Next.js host app and a Vite SPA with shared comp
 - Root configs (`nx.json`, `tsconfig.base.json`, `eslint.config.mjs`) define module boundaries and path aliases for every project.
 
 ## Applications
+
 - `nx-monorepo` – Next.js shell / host
 - `web-app` – Vite SPA
 - `nx-monorepo-e2e` – Cypress tests for the host app
 - `web-app-e2e` – Cypress tests for the Vite app
 
 ## Application Targets
-| Project | Purpose | Start (dev) | Production Build |
-| --- | --- | --- | --- |
-| `nx-monorepo` | Next.js shell application | `npx nx dev nx-monorepo` (aliased by `npm run dev`) | `npx nx build nx-monorepo` |
-| `web-app` | Vite/React SPA | `npx nx dev web-app` (`npm run dev:web`) | `npx nx build web-app` |
-| `nx-monorepo-e2e` | Cypress tests for Next.js app | `npx nx e2e nx-monorepo-e2e` (`npm run e2e -- --projects nx-monorepo-e2e`) | Record on CI |
-| `web-app-e2e` | Cypress tests for Vite app | `npx nx e2e web-app-e2e` (`npm run e2e -- --projects web-app-e2e`) | Record on CI |
+
+| Project           | Purpose                       | Start (dev)                                                                 | Production Build           |
+| ----------------- | ----------------------------- | --------------------------------------------------------------------------- | -------------------------- |
+| `nx-monorepo`     | Next.js shell application     | `npx nx dev nx-monorepo` (aliased by `pnpm run dev`)                        | `npx nx build nx-monorepo` |
+| `web-app`         | Vite/React SPA                | `npx nx dev web-app` (`pnpm run dev:web`)                                   | `npx nx build web-app`     |
+| `nx-monorepo-e2e` | Cypress tests for Next.js app | `npx nx e2e nx-monorepo-e2e` (`pnpm run e2e -- --projects nx-monorepo-e2e`) | Record on CI               |
+| `web-app-e2e`     | Cypress tests for Vite app    | `npx nx e2e web-app-e2e` (`pnpm run e2e -- --projects web-app-e2e`)         | Record on CI               |
 
 ## Installation & Scripts
-Install once with npm to generate `package-lock.json` (no pnpm lockfiles):
+
+Install once with pnpm to generate `package-lock.json` (no pnpm lockfiles):
 
 ```bash
 npm install
@@ -41,12 +45,14 @@ npm run graph        # opens the Nx dependency graph
 Scripts are wrappers around `nx run-many` / `nx <target> <project>` so you can also call Nx directly when needed (`npx nx dev split-bill`, `npx nx affected --target=build`, etc.).
 
 ## Contribution Guidelines
+
 - Follow the naming conventions and testing expectations in `docs/AGENTS.md`.
-- Run `npm run format:write` (Prettier, single quotes) before committing; lint/tests should pass locally.
+- Run `pnpm run format:write` (Prettier, single quotes) before committing; lint/tests should pass locally.
 - Keep imports within Nx’s enforced module boundaries; update `nx.json` tags when introducing new domains.
 - Use Conventional Commits (`feat: ...`, `fix: ...`) so `nx affected` output remains meaningful.
 
 ## Troubleshooting
-- If Nx complains about pnpm, ensure `pnpm-lock.yaml` is not present; this repo standardizes on npm.
-- Missing Vite plugins (e.g., `vite-tsconfig-paths`) have been added to root devDependencies—run `npm install` to refresh.
+
+- If Nx complains about pnpm, ensure `pnpm-lock.yaml` is not present; this repo standardizes on pnpm.
+- Missing Vite plugins (e.g., `vite-tsconfig-paths`) have been added to root devDependencies—run `pnpm install` to refresh.
 - Still seeing `[DEP0180] fs.Stats` warnings? They stem from upstream tooling and can be ignored until Nx/plugins update.
