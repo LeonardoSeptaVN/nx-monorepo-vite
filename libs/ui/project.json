@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "@nx-monorepo/ui",
+  "name": "ui",
   "projectType": "library",
   "sourceRoot": "libs/ui/src",
   "tags": [],
