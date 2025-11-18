@@ -13,14 +13,14 @@ type Story = StoryObj<typeof Button>;
 export const Primary = {
   args: {
     label: '',
-    onClick: '',
+    onClick: () => undefined,
   },
 } satisfies Story;
 
 export const Heading = {
   args: {
     label: '',
-    onClick: '',
+    onClick: () => undefined,
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByText(/Button/gi)).toBeTruthy();

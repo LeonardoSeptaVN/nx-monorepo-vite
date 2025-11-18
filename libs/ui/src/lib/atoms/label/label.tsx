@@ -1,3 +1,4 @@
+// libs/ui/src/lib/atoms/Label/Label.tsx
 import React from 'react';
 
 interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
@@ -19,3 +20,5 @@ export const Label: React.FC<LabelProps> = ({
     </label>
   );
 };
+
+export default Label;
