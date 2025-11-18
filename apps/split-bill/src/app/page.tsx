@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Trash2, Plus, Calculator } from 'lucide-react';
+import { Button, Input, Heading, Label } from '@nx-monorepo/ui';
 
 interface Order {
   id: number;
@@ -33,6 +34,10 @@ export default function SplitBillCalculator() {
   const [deliveryFee, setDeliveryFee] = useState<number>(0);
   const [serviceCharge, setServiceCharge] = useState<number>(0);
   const [results, setResults] = useState<Results | null>(null);
+  const [taxMode, setTaxMode] = useState<'percent' | 'nominal'>('percent');
+  const [serviceMode, setServiceMode] = useState<'percent' | 'nominal'>(
+    'percent'
+  );
 
   const addOrder = () => {
     setOrders([...orders, { id: Date.now(), name: '', items: '', price: 0 }]);
@@ -61,8 +66,13 @@ export default function SplitBillCalculator() {
       (sum, order) => sum + (Number(order.price) || 0),
       0
     );
-    const taxAmount = (subtotal * Number(tax)) / 100;
-    const serviceAmount = (subtotal * Number(serviceCharge)) / 100;
+    const taxAmount =
+      taxMode === 'percent' ? (subtotal * Number(tax)) / 100 : Number(tax);
+
+    const serviceAmount =
+      serviceMode === 'percent'
+        ? (subtotal * Number(serviceCharge)) / 100
+        : Number(serviceCharge);
     const totalBill =
       subtotal + taxAmount + Number(deliveryFee) + serviceAmount;
     const additionalPerPerson =
@@ -109,21 +119,27 @@ export default function SplitBillCalculator() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 text-center">
+          <Heading
+            size="h1"
+            className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 text-center"
+          >
             Split Bill Calculator
-          </h1>
+          </Heading>
           <p className="text-gray-600 text-center mb-8">
             Hitung tagihan bersama dengan mudah
           </p>
 
           {/* Orders Section */}
           <div className="space-y-4 mb-6">
-            <h2 className="text-xl font-semibold text-gray-700 flex items-center gap-2">
+            <Heading
+              size="h2"
+              className="text-xl font-semibold text-gray-700 flex items-center gap-2"
+            >
               <span className="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">
                 1
               </span>
               Daftar Pesanan
-            </h2>
+            </Heading>
 
             {orders.map((order, index) => (
               <div
@@ -135,40 +151,38 @@ export default function SplitBillCalculator() {
                     Pesanan #{index + 1}
                   </span>
                   {orders.length > 1 && (
-                    <button
+                    <Button
                       onClick={() => removeOrder(order.id)}
                       className="text-red-500 hover:text-red-700 transition-colors"
                     >
                       <Trash2 size={20} />
-                    </button>
+                    </Button>
                   )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <Label className="block text-sm font-medium text-gray-700 mb-1">
                       Nama Pemesan
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                       type="text"
                       value={order.name}
-                      onChange={(e) =>
-                        updateOrder(order.id, 'name', e.target.value)
-                      }
+                      onChange={(value) => updateOrder(order.id, 'name', value)}
                       placeholder="Masukkan nama"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <Label className="block text-sm font-medium text-gray-700 mb-1">
                       Item Pesanan
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                       type="text"
                       value={order.items}
-                      onChange={(e) =>
-                        updateOrder(order.id, 'items', e.target.value)
+                      onChange={(value) =>
+                        updateOrder(order.id, 'items', value)
                       }
                       placeholder="Nasi Goreng, Teh"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -176,14 +190,14 @@ export default function SplitBillCalculator() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <Label className="block text-sm font-medium text-gray-700 mb-1">
                       Harga (Rp)
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                       type="number"
                       value={order.price}
-                      onChange={(e) =>
-                        updateOrder(order.id, 'price', e.target.value)
+                      onChange={(value) =>
+                        updateOrder(order.id, 'price', value)
                       }
                       placeholder="0"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -193,83 +207,115 @@ export default function SplitBillCalculator() {
               </div>
             ))}
 
-            <button
+            <Button
               onClick={addOrder}
               className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
             >
               <Plus size={20} />
               Tambah Pesanan
-            </button>
+            </Button>
           </div>
 
           {/* Additional Charges Section */}
           <div className="bg-amber-50 rounded-lg p-4 border-2 border-amber-200 mb-6">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
+            <Heading
+              size="h2"
+              className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2"
+            >
               <span className="bg-amber-100 text-amber-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">
                 2
               </span>
               Biaya Tambahan
-            </h2>
+            </Heading>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Pajak (%)
-                </label>
-                <input
-                  type="number"
-                  value={tax}
-                  onChange={(e) => setTax(Number(e.target.value) || 0)}
-                  placeholder="10"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
+                <Label className="block text-sm font-medium text-gray-700 mb-1">
+                  Pajak
+                </Label>
+
+                <div className="flex gap-2">
+                  <select
+                    className="border border-gray-300 rounded-lg px-2"
+                    value={taxMode}
+                    onChange={(e) =>
+                      setTaxMode(e.target.value as 'percent' | 'nominal')
+                    }
+                  >
+                    <option value="percent">%</option>
+                    <option value="nominal">Rp</option>
+                  </select>
+
+                  <Input
+                    type="number"
+                    value={tax}
+                    onChange={(value) => setTax(Number(value) || 0)}
+                    placeholder={taxMode === 'percent' ? '10' : '1000'}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <Label className="block text-sm font-medium text-gray-700 mb-1">
                   Biaya Kirim (Rp)
-                </label>
-                <input
+                </Label>
+                <Input
                   type="number"
                   value={deliveryFee}
-                  onChange={(e) => setDeliveryFee(Number(e.target.value) || 0)}
+                  onChange={(value) => setDeliveryFee(Number(value) || 0)}
                   placeholder="0"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Service Charge (%)
-                </label>
-                <input
-                  type="number"
-                  value={serviceCharge}
-                  onChange={(e) =>
-                    setServiceCharge(Number(e.target.value) || 0)
-                  }
-                  placeholder="5"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
+                <Label className="block text-sm font-medium text-gray-700 mb-1">
+                  Service Charge
+                </Label>
+
+                <div className="flex gap-2">
+                  <select
+                    className="border border-gray-300 rounded-lg px-2"
+                    value={serviceMode}
+                    onChange={(e) =>
+                      setServiceMode(e.target.value as 'percent' | 'nominal')
+                    }
+                  >
+                    <option value="percent">%</option>
+                    <option value="nominal">Rp</option>
+                  </select>
+
+                  <Input
+                    type="number"
+                    value={serviceCharge}
+                    onChange={(value) => setServiceCharge(Number(value) || 0)}
+                    placeholder={serviceMode === 'percent' ? '5' : '1000'}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Calculate Button */}
-          <button
+          <Button
             onClick={calculateBill}
             className="w-full py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-lg transition-colors flex items-center justify-center gap-2 shadow-lg"
           >
             <Calculator size={24} />
             Hitung Total Tagihan
-          </button>
+          </Button>
 
           {/* Results Section */}
           {results && (
             <div className="mt-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border-2 border-green-200">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              <Heading
+                size="h2"
+                className="text-2xl font-bold text-gray-800 mb-4"
+              >
                 Hasil Perhitungan
-              </h2>
+              </Heading>
 
               {/* Individual Bills */}
               <div className="space-y-3 mb-6">
@@ -277,9 +323,9 @@ export default function SplitBillCalculator() {
                   <div key={calc.id} className="bg-white rounded-lg p-4 shadow">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h3 className="font-bold text-gray-800">
+                        <Heading size="h3" className="font-bold text-gray-800">
                           {calc.name || `Pesanan #${index + 1}`}
-                        </h3>
+                        </Heading>
                         <p className="text-sm text-gray-600">{calc.items}</p>
                       </div>
                       <div className="text-right">
@@ -341,12 +387,11 @@ export default function SplitBillCalculator() {
                 </div>
               </div>
 
-              <button
+              <Button
                 onClick={resetCalculator}
                 className="w-full mt-4 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
-              >
-                Hitung Ulang
-              </button>
+                label="Hitung Ulang"
+              ></Button>
             </div>
           )}
         </div>
